@@ -265,6 +265,15 @@
             align-items: center;
             z-index: 10;
         }
+        .mirror-text div:first-child,
+        .mirror-text div:last-child {
+            font-size: inherit;
+        }
+        .mirror-icon {
+            width: 2em;
+            height: 2em;
+            margin: 0.2em 0;
+        }
         @media (max-width: 768px) {
             .header { font-size: 2em; }
             .subheader { font-size: 1.2em; }
@@ -276,6 +285,8 @@
             .header-banner { max-width: 100%; }
             .social-links { flex-direction: column; align-items: center; }
             .modal-content { width: 95%; }
+            .mirror-text { font-size: 1.5em; }
+            .mirror-icon { width: 1.5em; height: 1.5em; }
         }
         @media (max-width: 480px) {
             .meme-gallery { grid-template-columns: 1fr; max-width: 250px; }
@@ -286,7 +297,7 @@
 <body>
     <div class="mirror-text">
         <div>bnb</div>
-        <div>🪞</div>
+        <div><img src="mirror.png" alt="Mirror" class="mirror-icon"></div>
         <div>pup</div>
     </div>
     
@@ -314,6 +325,7 @@
             <a href="https://twitter.com/pupXbnb" target="_blank">🐦 Twitter</a>
             <a href="https://x.com/i/communities/1974555622281560563" target="_blank">📱 Community</a>
             <a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x8e86a6c334ab270084bf8273d5293488f2578207?t=1759606776194" target="_blank">📊 Chart</a>
+            <a href="https://drive.google.com/drive/folders/YOUR_GOOGLE_DRIVE_FOLDER_ID?usp=sharing" target="_blank">🖼️ Memes</a>
         </div>
     </section>
     
