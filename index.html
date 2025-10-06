@@ -154,13 +154,76 @@
         .gallery-section {
             margin: 2em 0;
             width: 100%;
-            max-width: 900px;
+            max-width: 1500px;
+            display: flex;
+            gap: 4em; /* Increased gap to push meme gallery "far right" */
+            justify-content: center;
+            align-items: flex-start; /* Align tops for same height level */
         }
-        .gallery-title {
+        .video-section, .meme-section {
+            flex: 1;
+            max-width: 600px;
+            text-align: center; /* Center everything in video-section */
+        }
+        .video-title, .gallery-title {
             font-size: 2em;
             font-weight: bold;
             margin-bottom: 1.5em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-align: center; /* Align gallery titles to center */
+        }
+        .video-container {
+            position: relative;
+            background: #f39c12;
+            border-radius: 15px;
+            padding: 1em;
+            aspect-ratio: 9/16; /* Vertical for TikTok style */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            max-height: 800px; /* Limit max height for larger size on web */
+            overflow: hidden;
+        }
+        #vimeoPlayer {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .video-controls {
+            display: flex;
+            gap: 10px;
+            background: rgba(0,0,0,0.7); /* Darker for better visibility on orange */
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            margin-top: 10px; /* Space below video */
+        }
+        .control-btn {
+            background: rgba(255,255,255,0.9);
+            color: #e67e22;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 60px; /* Ensure consistent width */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .control-btn:hover {
+            background: #e67e22;
+            color: white;
+            transform: scale(1.05);
+        }
+        .control-btn small {
+            font-size: 0.7em;
+            margin-left: 5px;
         }
         .meme-gallery {
             display: grid;
@@ -277,59 +340,74 @@
         @media (max-width: 768px) {
             .header { font-size: 2em; }
             .subheader { font-size: 1.2em; }
+            .gallery-section { flex-direction: column; gap: 1em; } /* Stack on mobile */
             .meme-gallery { 
                 grid-template-columns: repeat(2, 200px); /* 2 on tablet/smaller screens */
                 gap: 0.5em; 
             }
             .contract-buttons { flex-direction: column; }
-            .header-banner { max-width: 100%; }
+            .header-banner { max-width: 50%; }
             .social-links { flex-direction: column; align-items: center; }
             .modal-content { width: 95%; }
             .mirror-text { font-size: 1.5em; }
             .mirror-icon { width: 1.5em; height: 1.5em; }
+            .video-container { aspect-ratio: 9/16; max-height: 600px; } /* Keep vertical on mobile, limit height */
         }
         @media (max-width: 480px) {
             .meme-gallery { grid-template-columns: 1fr; max-width: 250px; }
             .close { top: 10px; right: 20px; font-size: 30px; }
+            .video-controls { flex-wrap: wrap; justify-content: center; gap: 5px; }
+            .control-btn { min-width: 50px; padding: 5px 8px; font-size: 0.9em; }
         }
     </style>
 </head>
 <body>
     <div class="mirror-text">
         <div>bnb</div>
-        <div><img src="https://media.discordapp.net/attachments/1397790509488934976/1424178205618602004/1fa9e.png?ex=68e300d0&is=68e1af50&hm=7ead358f461f4701751ca3a2ff684a5371c30ecc3eae41d6005065e622c4c48f&=&format=webp&quality=lossless&width=461&height=461" alt="Mirror" class="mirror-icon"></div>
+        <div><img src="https://media.discordapp.net/attachments/1397790509488934976/1424575273868984470/line_2.png?ex=68e4729c&is=68e3211c&hm=5e9fb6fb2390fb8dd7dbc034322e63b0e447fad632d85997e12448e895ac7097&=&format=webp&quality=lossless&width=54&height=54"></div>
         <div>pup</div>
     </div>
     
-    <img src="https://pbs.twimg.com/profile_banners/1974506415390691328/1759601285/1500x500" alt="Pup on BNB Banner" class="header-banner">
+<img src="https://pbs.twimg.com/profile_banners/1974506415390691328/1759601285/1500x500" alt="Pup on BNB Banner" class="header-banner">
+
+<h1 class="header">PUP on BNB</h1>
+<p class="subheader">The Loyal Mirror Pup Reflecting Gains on the Chain</p>
+
+<section class="contract-section">
+    <h2 class="contract-title">CONTRACT ADDRESS</h2>
+    <div style="position: relative;">
+        <input type="text" class="contract-address" id="contractAddr" value="0x73b84f7e3901f39fc29f3704a03126d317ab4444" readonly>
+    </div>
+    <button class="copy-btn" onclick="copyAddress()"> Copy</button>
+    <div class="contract-buttons">
+        <a href="https://four.meme/token/0x73b84f7e3901f39fc29f3704a03126d317ab4444" class="contract-btn" target="_blank">View on Four.meme</a>
+        <a href="https://dexscreener.com/bsc/0x8e86a6c334ab270084bf8273d5293488f2578207" class="contract-btn" target="_blank">View on DexScreener</a>
+    </div>
+</section>
+
+<section class="action-section">
+    <a href="https://pump.fun/2qkjTVJChd8K1ECEJ7eQmXtB8nLyG56u1pump" class="buy-button" target="_blank">Buy $PUP</a>
     
-    <h1 class="header">PUP on BNB</h1>
-    <p class="subheader">The Loyal Mirror Pup Reflecting Gains on the Chain</p>
-    
-    <section class="contract-section">
-        <h2 class="contract-title">CONTRACT ADDRESS</h2>
-        <div style="position: relative;">
-            <input type="text" class="contract-address" id="contractAddr" value="0x73b84f7e3901f39fc29f3704a03126d317ab4444" readonly>
+<div class="social-links">
+    <a href="https://twitter.com/pupXbnb" target="_blank"> Twitter</a>
+    <a href="https://x.com/i/communities/1974555622281560563" target="_blank"> Community</a>
+    <a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x8e86a6c334ab270084bf8273d5293488f2578207?t=1759606776194" target="_blank"> Chart</a>
+    <a href="https://drive.google.com/drive/folders/1ka2zkkpIV7u2WJTPPXYRnQ3NIoYaxU9-?dmr=1&ec=wgc-drive-hero-goto" target="_blank"> Memes</a>
+</div></section>
+
+<section class="gallery-section">
+    <div class="video-section">
+        <h2 class="video-title">Video Gallery</h2>
+        <div class="video-container">
+            <iframe id="vimeoPlayer" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Vimeo Player"></iframe>
+            <div class="video-controls">
+                <button class="control-btn" onclick="previousVideo(event)"> <small>Prev</small></button>
+                <button class="control-btn" onclick="nextVideo(event)"> <small>Next</small></button>
+                <button class="control-btn" id="muteBtn" onclick="toggleMute(event)">Unmute</button>
+            </div>
         </div>
-        <button class="copy-btn" onclick="copyAddress()">📋 Copy</button>
-        <div class="contract-buttons">
-            <a href="https://four.meme/token/0x73b84f7e3901f39fc29f3704a03126d317ab4444" class="contract-btn" target="_blank">View on Four.meme</a>
-            <a href="https://dexscreener.com/bsc/0x8e86a6c334ab270084bf8273d5293488f2578207" class="contract-btn" target="_blank">View on DexScreener</a>
-        </div>
-    </section>
-    
-    <section class="action-section">
-        <a href="https://pump.fun/2qkjTVJChd8K1ECEJ7eQmXtB8nLyG56u1pump" class="buy-button" target="_blank">Buy $PUP</a>
-        
-        <div class="social-links">
-            <a href="https://twitter.com/pupXbnb" target="_blank">🐦 Twitter</a>
-            <a href="https://x.com/i/communities/1974555622281560563" target="_blank">📱 Community</a>
-            <a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x8e86a6c334ab270084bf8273d5293488f2578207?t=1759606776194" target="_blank">📊 Chart</a>
-            <a href="https://drive.google.com/drive/folders/1ka2zkkpIV7u2WJTPPXYRnQ3NIoYaxU9-?dmr=1&ec=wgc-drive-hero-goto" target="_blank">🖼️ Memes</a>
-        </div>
-    </section>
-    
-    <section class="gallery-section">
+    </div>
+    <div class="meme-section">
         <h2 class="gallery-title">Meme Gallery</h2>
         <div class="meme-gallery">
             <div class="meme-item" onclick="openModal('https://i.imgur.com/kGmCc2E.png')">
@@ -431,50 +509,128 @@
             <div class="meme-item" onclick="openModal('https://i.imgur.com/23K7UGk.png')">
                 <img src="https://i.imgur.com/23K7UGk.png" alt="Pup Meme 33" class="meme-image">
             </div>
-            <div class="meme-item" onclick="openModal('https://i.imgur.com/hJRbDpZ.png')">
+            <div class="meme-item" onclick="openModal('https://i.imgur.com/23K7UGk.png')">
                 <img src="https://i.imgur.com/23K7UGk.png" alt="Pup Meme 34" class="meme-image">
             </div>
         </div>
-    </section>
-
-    <!-- Lightbox Modal -->
-    <div id="imageModal" class="modal" onclick="closeModal(event)">
-        <span class="close" onclick="closeModal(event)">&times;</span>
-        <img class="modal-content" id="modalImage">
-        <a id="downloadLink" class="download-btn" download>⬇️ Download</a>
     </div>
-    
-    <script>
-        function copyAddress() {
-            const addr = document.getElementById('contractAddr');
-            addr.select();
-            document.execCommand('copy');
-            alert('Address copied to clipboard!');
-        }
+</section>
 
-        function openModal(src) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            const downloadLink = document.getElementById('downloadLink');
-            modal.style.display = 'block';
-            modalImg.src = src;
-            downloadLink.href = src;
-            downloadLink.download = 'pup-meme.png'; // Generic filename; can be dynamic if needed
-        }
+<!-- Lightbox Modal -->
+<div id="imageModal" class="modal" onclick="closeModal(event)">
+    <span class="close" onclick="closeModal(event)">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <a id="downloadLink" class="download-btn" download> Download</a>
+</div>
 
-        function closeModal(event) {
-            if (event.target.classList.contains('modal') || event.target.classList.contains('close')) {
-                document.getElementById('imageModal').style.display = 'none';
-            }
-        }
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+    function copyAddress() {
+        const addr = document.getElementById('contractAddr');
+        addr.select();
+        document.execCommand('copy');
+        alert('Address copied to clipboard!');
+    }
 
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal(event);
-            }
-        });
-    </script>
-</body>
+    function openModal(src) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const downloadLink = document.getElementById('downloadLink');
+        modal.style.display = 'block';
+        modalImg.src = src;
+        downloadLink.href = src;
+        downloadLink.download = 'pup-meme.png'; // Generic filename; can be dynamic if needed
+    }
+
+    function closeModal(event) {
+        if (event.target.classList.contains('modal') || event.target.classList.contains('close')) {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal(event);
+        }
+    });
+
+    // Video Carousel Logic for Vimeo
+    const videoSources = [
+        'https://player.vimeo.com/video/1124687629?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&loop=1',
+        'https://player.vimeo.com/video/1124687636?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&loop=1',
+        'https://player.vimeo.com/video/1124687651?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&loop=1',
+        'https://player.vimeo.com/video/1124687675?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&loop=1',
+        'https://player.vimeo.com/video/1124687643?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&loop=1',
+        'https://player.vimeo.com/video/1124687664?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&loop=1',
+        'https://player.vimeo.com/video/1124687670?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&loop=1',
+        'https://player.vimeo.com/video/1124687641?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&loop=1',
+        'https://player.vimeo.com/video/1124687660?title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&muted=1&loop=1'
+    ];
+    let currentVideoIndex = 0;
+    let currentPlayer = null;
+    const vimeoIframe = document.getElementById('vimeoPlayer');
+    const muteBtn = document.getElementById('muteBtn');
+
+    function loadVideo(index) {
+        const src = videoSources[index];
+        vimeoIframe.src = src; // Update iframe src
+
+        // Wait a bit for iframe to load, then initialize player
+        setTimeout(() => {
+            currentPlayer = new Vimeo.Player(vimeoIframe);
+            initializePlayerEvents();
+        }, 500);
+    }
+
+    function initializePlayerEvents() {
+        if (currentPlayer) {
+            // Set initial state: muted, autoplay (handled by params), loop (params)
+            currentPlayer.setVolume(0); // Ensure muted
+            muteBtn.textContent = 'Unmute'; // Initial muted
+
+            currentPlayer.on('play', () => {
+                // No action needed
+            });
+            currentPlayer.on('pause', () => {
+                // No action needed
+            });
+            currentPlayer.on('ended', () => {
+                // Loop handled by params, but fallback to next if needed
+                nextVideo({ stopPropagation: () => {} });
+            });
+        }
+    }
+
+    function nextVideo(e) {
+        if (e) e.stopPropagation();
+        currentVideoIndex = (currentVideoIndex + 1) % videoSources.length;
+        loadVideo(currentVideoIndex);
+    }
+
+    function previousVideo(e) {
+        if (e) e.stopPropagation();
+        currentVideoIndex = (currentVideoIndex - 1 + videoSources.length) % videoSources.length;
+        loadVideo(currentVideoIndex);
+    }
+
+    function toggleMute(e) {
+        if (e) e.stopPropagation();
+        if (currentPlayer) {
+            currentPlayer.getVolume().then(volume => {
+                const newVolume = volume > 0 ? 0 : 1;
+                currentPlayer.setVolume(newVolume);
+                muteBtn.textContent = newVolume > 0 ? 'Mute' : 'Unmute';
+            });
+        }
+    }
+
+    // Initialize first video
+    loadVideo(0);
+
+    // Remove container click toggle (no pause/unpause on hover or click, video plays on its own)
+    // document.querySelector('.video-container').addEventListener('click', togglePlay); // Removed
+</script></body>
 
 </html>
+
